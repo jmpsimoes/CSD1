@@ -3,7 +3,7 @@ package main.java.client;
 // This is the class which sends requests to replicas
 
 import bftsmart.tom.ServiceProxy;
-import main.java.RequestType;
+import main.java.server.RequestType;
 import redis.clients.jedis.Jedis;
 
 import java.io.*;

@@ -1,7 +1,6 @@
 package main.java.server;
 
 
-import main.java.ServerResources;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 

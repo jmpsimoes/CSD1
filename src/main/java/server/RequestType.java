@@ -1,4 +1,4 @@
-package main.java;
+package main.java.server;
 
 public class RequestType {
     public static final int PUT = 1;

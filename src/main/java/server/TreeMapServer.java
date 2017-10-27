@@ -5,11 +5,9 @@ package main.java.server;
 import bftsmart.tom.MessageContext;
 import bftsmart.tom.ServiceReplica;
 import bftsmart.tom.server.defaultservices.DefaultRecoverable;
-import main.java.RequestType;
 import redis.clients.jedis.Jedis;
 
 import java.io.*;
-import java.net.URL;
 import java.util.Map;
 import java.util.TreeMap;
 
