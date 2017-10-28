@@ -20,8 +20,8 @@ import java.security.SecureRandom;
 public class Server {
 
     static final File KEYSTORE = new File("./server.jks");
-    static final char[] JKS_PASS = "csd_server".toCharArray();
-    static final char[] KEY_PASS = "csd_server".toCharArray();
+    static final char[] JKS_PASS = "csd_tp1".toCharArray();
+    static final char[] KEY_PASS = "csd_tp1".toCharArray();
 
     public static void main(String[] args) throws Exception {
         int port = 9090;
