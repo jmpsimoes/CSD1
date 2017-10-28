@@ -8,20 +8,25 @@ import bftsmart.tom.server.defaultservices.DefaultRecoverable;
 import redis.clients.jedis.Jedis;
 
 import java.io.*;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 // Classes that need to be declared to implement this
 // replicated Map
 
 public class TreeMapServer extends DefaultRecoverable {
 
-    Map<String, String> table;
+    Map<String, Map<String, String>> table;
     private Jedis jedis;
+    private List<String> fields;
 
     public TreeMapServer(int id, String URLServer) {
         table = new TreeMap<>();
         jedis = new Jedis(URLServer, 6379);
+        fields = new ArrayList<>();
+
+        fields.add("name");
+        fields.add("age");
+        fields.add("address");
 
         //teste
         jedis.set("Joao", "MELHORDOMUNDO");
@@ -61,21 +66,35 @@ public class TreeMapServer extends DefaultRecoverable {
         try {
             reqType = dis.readInt();
             if (reqType == RequestType.PUT) {
-                String key = dis.readUTF();
-                String value = dis.readUTF();
-                table.put(key, value);
-                String result = jedis.hmset(key, table);
+                String id = dis.readUTF();
+                int size = Integer.parseInt(dis.readUTF());
+
+                Map<String, String> aux = new HashMap<>();
+                String key=null;
+                String value;
+
+                for(int i = 0; i < size; i++){
+                    key = dis.readUTF();
+                    if(fields.contains(key)){
+                        value = dis.readUTF();
+                        aux.put(key, value);
+                    }
+                }
+                //adicao no fim
+                table.put(id, aux);
+                String result = jedis.hmset(id, aux);
+
                 byte[] resultBytes = null;
                 if (result != null) {
                     resultBytes = result.getBytes();
                 }
                 return resultBytes;
             } else if (reqType == RequestType.REMOVE) {
-                String key = dis.readUTF();
-                String removedValue = table.remove(key);
-                long resultValue = jedis.hdel(key, new String(removedValue));
-                byte[] resultBytes = null;
-                resultBytes = removedValue.getBytes();
+                String keyID = dis.readUTF();
+                Map<String, String> removedValue = table.remove(keyID);
+                long resultValue = jedis.hdel(keyID);
+
+                byte[] resultBytes = removedValue.toString().getBytes();
                 return resultBytes;
             } else {
                 System.out.println("Unknown request type: " + reqType);
@@ -126,7 +145,7 @@ public class TreeMapServer extends DefaultRecoverable {
         ByteArrayInputStream bis = new ByteArrayInputStream(state);
         try {
             ObjectInput in = new ObjectInputStream(bis);
-            table = (Map<String, String>) in.readObject();
+            table = (Map<String ,Map<String, String>>) in.readObject();
             in.close();
             bis.close();
         } catch (ClassNotFoundException e) {
