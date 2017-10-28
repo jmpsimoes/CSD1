@@ -28,7 +28,7 @@ public class Server {
         URI baseUri = UriBuilder.fromUri("https://127.0.1.1/").port(port).build();
 
         ResourceConfig config = new ResourceConfig();
-        config.register(new ServerResources("sec"));
+        config.register(new ServerResources());
 
         SSLContext sslContext = SSLContext.getInstance("TLSv1");
 

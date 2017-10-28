@@ -4,7 +4,6 @@ package main.java.client;
 
 import bftsmart.tom.ServiceProxy;
 import main.java.server.RequestType;
-import redis.clients.jedis.Jedis;
 
 import java.io.*;
 import java.util.Collection;
@@ -17,12 +16,11 @@ import java.util.Set;
 public class MapClient implements Map<String, String> {
 
     ServiceProxy clientProxy = null;
-    private Jedis jedis;
+
 
     public MapClient(int clientId) {
         System.out.println("----------" + "\n" + "Client ID: " + clientId + "\n" + "----------");
         clientProxy = new ServiceProxy(clientId);
-        jedis = new Jedis("127.0.1.1");
     }
 
     @Override
