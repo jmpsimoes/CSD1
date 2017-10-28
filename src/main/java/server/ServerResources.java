@@ -26,7 +26,7 @@ import static javax.ws.rs.core.Response.Status.*;
  * Implementacao do servidor de rendezvous em REST
  */
 
-@Path("/contacts")
+@Path("/")
 public class ServerResources{
 
 
@@ -83,15 +83,20 @@ public class ServerResources{
 
 
     @DELETE
-    @Path("/{id}")
-    public void unregister(@PathParam("id") String id, @QueryParam("secret") String secret) {
-
-    }
-
-    @PUT
-    @Path("/heartbeat")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void heartbeat() {
-
+    @Path("/rm/{id}")
+    public void remove(@PathParam("id") String key) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(out);
+        try {
+            dos.writeInt(RequestType.REMOVE);
+            dos.writeBytes(key);
+            byte[] reply = clientProxy.invokeOrdered(out.toByteArray());
+            if (reply != null) {
+                String previousValue = new String(reply);
+                System.out.println(previousValue);
+            }
+        } catch (IOException ioe) {
+            System.out.println("Exception putting value into hashmap: " + ioe.getMessage());
+        }
     }
 }
