@@ -1,56 +1,38 @@
 # CSD1
-Agora é que vai. 
+D-KSVS
 
 # csd-tp1-DSKVS
 Repository for the CSD's first work.
 
 # How to Launch
-## Optional
-
-On directory:
-
-`$ mvn install`
 
 ## 1: Install Redis
 
-`$ sudo apt-get update` 
+`$ sudo docker pull redis` 
 
-`$ sudo apt-get install redis-server`
+## 2: Run redis Servers
 
-## 2: Make config files to Redis
+ $ docker run --name redisX -d redis
+  onde "redisX" é o nome do servidor, à sua escolha.
 
-On `~/.config/` make two files -- respectively to a client and to a server.
+Ver o IP que o servidor redis está ligado
+ $ docker  inspect redisX
 
-For example:
+Stop containers do docker
+ $ docker stop $(docker ps -a -q)
 
-`bind 127.0.1.1`
 
-`port 11000`
+Remover os containers do docker
+ $ docker rm $(docker ps -a -q)
 
-## 3: Launch two instances of Redis
 
-Launch two instances like this:
+## 3: Run BFT-SMaRt replicas
 
-`$ redis-server ~/.config/CONFIGFORREDIS.config`
+On your IDE import the GitHub project, then run TreeMapServer class with following argumentes:
+"id of the bft-smart replica" , "IP from Redis Server"
+For example: 3 172.17.0.2
 
-## 4: On your IDE: 
-
-Run 4 TreeMapServer's and 1 ConsoleClient -- Just launch. You should not have to worry about the configuration of hosts and ports.
-
-## 5: All set:
-
-Now you can do operations on Client.
-
-The logs are wise on server-side.
-
-## TODO:
-`REST, SSL, addElement, writeElement, isElement, readElement`
-
-`Dockerfile exists and it's not a mirage...`
-
-`To build/run:`
-
-`Build: $ docker build -t NAMEOFIMAGE . -- you should be on the main module of the project, where the Dockerfile should be`
-
-`Run [BETA]: $ docker run --rm -v $PWD:/app -w /app/src/main/java/gettingstarted/server/ NAMEOFPROJECT javac TreeMapServer.java`
-
+## 4: Run API Server
+ Just run the class named "Server"
+ It will connect to an instance of TreeMapServer.
+ 
