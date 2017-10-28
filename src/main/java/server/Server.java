@@ -48,8 +48,6 @@ public class Server {
 
         JdkHttpServerFactory.createHttpServer(baseUri, config, sslContext);
 
-        //ServiceProxy serviceProxy = new ServiceProxy(0);
-
         System.err.println("SSL REST RendezVous Server ready @ " + baseUri + " : host :" + InetAddress.getLocalHost().getHostAddress());
 
     }

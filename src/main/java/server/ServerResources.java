@@ -84,6 +84,7 @@ public class ServerResources{
 
     @DELETE
     @Path("/rm/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
     public void remove(@PathParam("id") String key) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(out);

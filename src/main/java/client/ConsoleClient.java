@@ -1,15 +1,26 @@
 package main.java.client;
 
+
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+
+
+
 import java.io.Console;
 import java.util.Scanner;
 
 public class ConsoleClient {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         if (args.length < 1) {
             System.out.println("Usage: ConsoleClient <main.java.client id>");
             System.exit(0);
         }
+
+        SSLContext sslContext = SSLContext.getInstance("TLSv1");
+        
+
 
         MapClient client = new MapClient(Integer.parseInt(args[0]));
         Console console = System.console();
