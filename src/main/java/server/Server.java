@@ -35,7 +35,7 @@ public class Server {
         KeyStore keyStore = KeyStore.getInstance("JKS");
 
         try (InputStream is = new FileInputStream(KEYSTORE)) {
-            keyStore.load(is, KEY_PASS);
+            keyStore.load(is, JKS_PASS);
         }
 
         KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
